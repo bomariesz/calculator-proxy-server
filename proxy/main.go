@@ -129,19 +129,19 @@ func callCalculatorAPI(w http.ResponseWriter, r *http.Request, url string) {
 }
 
 func addition(w http.ResponseWriter, r *http.Request) {
-
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator/sum")
 }
 
 func subtraction(w http.ResponseWriter, r *http.Request) {
-
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator/sub")
 }
 
 func multiplication(w http.ResponseWriter, r *http.Request) {
-
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator/mul")
 }
 
 func division(w http.ResponseWriter, r *http.Request) {
-
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator/div")
 }
 
 func main() {
