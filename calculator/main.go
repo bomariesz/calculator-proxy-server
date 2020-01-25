@@ -93,12 +93,12 @@ func calculate(w http.ResponseWriter, variable calcRequest, operation string) {
 		result = variable.A * variable.B
 	case "/":
 		if variable.B == 0 {
-			err = errors.New("error: you tried to divide by zero")
+			err = errors.New("you tried to divide by zero")
 		} else {
 			result = variable.A / variable.B
 		}
 	default:
-		err = errors.New("error: Invalid operation selected")
+		err = errors.New("invalid operation selected")
 	}
 
 	if err != nil {
@@ -172,13 +172,41 @@ func division(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func requestHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.URL.Path {
+	case "/calculator/sum":
+		if r.Method == http.MethodPost {
+			addition(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	case "/calculator/sub":
+		if r.Method == http.MethodPost {
+			subtraction(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	case "/calculator/mul":
+		if r.Method == http.MethodPost {
+			multiplication(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	case "/calculator/div":
+		if r.Method == http.MethodPost {
+			division(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	default:
+		http.Error(w, "404 Not Found", http.StatusNotFound)
+	}
+}
+
 func main() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/calculator/sum", addition)
-	mux.HandleFunc("/calculator/sub", subtraction)
-	mux.HandleFunc("/calculator/mul", multiplication)
-	mux.HandleFunc("/calculator/div", division)
+	mux.HandleFunc("/", requestHandler)
 
 	log.Fatal(http.ListenAndServe(":8090", mux))
 }
