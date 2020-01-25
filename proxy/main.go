@@ -46,6 +46,7 @@ func respSuccess(data calcData, w http.ResponseWriter) {
 	dataJSON, err := transformJSON(data)
 	if err != nil {
 		errData := errorData{
+
 			Message: err.Error(),
 		}
 
@@ -129,42 +130,42 @@ func callCalculatorAPI(w http.ResponseWriter, r *http.Request, url string) {
 }
 
 func addition(w http.ResponseWriter, r *http.Request) {
-	callCalculatorAPI(w, r, "http://localhost:8090/calculator/sum")
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator.sum")
 }
 
 func subtraction(w http.ResponseWriter, r *http.Request) {
-	callCalculatorAPI(w, r, "http://localhost:8090/calculator/sub")
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator.sub")
 }
 
 func multiplication(w http.ResponseWriter, r *http.Request) {
-	callCalculatorAPI(w, r, "http://localhost:8090/calculator/mul")
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator.mul")
 }
 
 func division(w http.ResponseWriter, r *http.Request) {
-	callCalculatorAPI(w, r, "http://localhost:8090/calculator/div")
+	callCalculatorAPI(w, r, "http://localhost:8090/calculator.div")
 }
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
-	case "/calculator/sum":
+	case "/calculator.sum":
 		if r.Method == http.MethodPost {
 			addition(w, r)
 		} else {
 			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 		}
-	case "/calculator/sub":
+	case "/calculator.sub":
 		if r.Method == http.MethodPost {
 			subtraction(w, r)
 		} else {
 			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 		}
-	case "/calculator/mul":
+	case "/calculator.mul":
 		if r.Method == http.MethodPost {
 			multiplication(w, r)
 		} else {
 			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 		}
-	case "/calculator/div":
+	case "/calculator.div":
 		if r.Method == http.MethodPost {
 			division(w, r)
 		} else {
