@@ -174,25 +174,25 @@ func division(w http.ResponseWriter, r *http.Request) {
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
-	case "/calculator/sum":
+	case "/calculator.sum":
 		if r.Method == http.MethodPost {
 			addition(w, r)
 		} else {
 			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 		}
-	case "/calculator/sub":
+	case "/calculator.sub":
 		if r.Method == http.MethodPost {
 			subtraction(w, r)
 		} else {
 			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 		}
-	case "/calculator/mul":
+	case "/calculator.mul":
 		if r.Method == http.MethodPost {
 			multiplication(w, r)
 		} else {
 			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 		}
-	case "/calculator/div":
+	case "/calculator.div":
 		if r.Method == http.MethodPost {
 			division(w, r)
 		} else {
