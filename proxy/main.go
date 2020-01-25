@@ -144,13 +144,41 @@ func division(w http.ResponseWriter, r *http.Request) {
 	callCalculatorAPI(w, r, "http://localhost:8090/calculator/div")
 }
 
+func requestHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.URL.Path {
+	case "/calculator/sum":
+		if r.Method == http.MethodPost {
+			addition(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	case "/calculator/sub":
+		if r.Method == http.MethodPost {
+			subtraction(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	case "/calculator/mul":
+		if r.Method == http.MethodPost {
+			multiplication(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	case "/calculator/div":
+		if r.Method == http.MethodPost {
+			division(w, r)
+		} else {
+			http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		}
+	default:
+		http.Error(w, "404 Not Found", http.StatusNotFound)
+	}
+}
+
 func main() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/calculator/sum", addition)
-	mux.HandleFunc("/calculator/sub", subtraction)
-	mux.HandleFunc("/calculator/mul", multiplication)
-	mux.HandleFunc("/calculator/div", division)
+	mux.HandleFunc("/", requestHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
